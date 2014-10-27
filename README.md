@@ -1,14 +1,14 @@
-Jersey REST Server and Client (JSON)
+Jersey REST web service
 ================================================
 Java web application that provide REST web services.
 
 Frameworks & Libraries
 ======================
-Gradle    : build
-Jersey    : REST web service
-Spring 4  : Dependencies injection
-Jackson 2 : JSON processing
-Jetty     : Servlet container
+* Gradle    : build
+* Jersey    : REST web service
+* Spring 4  : Dependencies injection
+* Jackson 2 : JSON processing
+* Jetty     : Servlet container
 
 Testing frameworks : jersey-test, spring-test, junit, spock
 
