@@ -12,7 +12,7 @@ apply plugin: 'idea'
 
 group = 'org.wai'
 version = '1.0.0'
-description = "Example Jersey REST Client and Server"
+description = "Example Jersey REST Server"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -31,17 +31,22 @@ sourceSets {
   }
 }
 
-
-task wrapper(type: Wrapper) {
-  gradleVersion = '2.0'
-}
-
+[jettyRun, jettyRunWar,jettyStop]*.stopPort = 8090
+[jettyRun, jettyRunWar,jettyStop]*.stopKey = 'stopKey'
 task integrationTest(type: Test) {
   dependsOn test
 
-
   testClassesDir = sourceSets.integrationTest.output.classesDir
   classpath = sourceSets.integrationTest.runtimeClasspath
+
+  //Need to start up Jetty before running the REST-assured tests
+  doFirst {
+    jettyRun.daemon = true
+    jettyRun.execute()
+  }
+  doLast {
+    jettyStop.execute()
+  }
 }
 
 check.dependsOn integrationTest
@@ -66,7 +71,7 @@ dependencies {
     exclude group: 'org.springframework'
   }
   compile "org.glassfish.jersey.media:jersey-media-json-jackson:${jerseyVersion}"      //JSON support for Jersey
-  // compile "org.glassfish.jersey:jersey-client:${jerseyVersion}"
+  compile "org.glassfish.jersey.core:jersey-client:${jerseyVersion}"
 
 
   // The production code uses the SLF4J logging API at compile time
@@ -77,12 +82,23 @@ dependencies {
   compile group: 'ch.qos.logback', name: 'logback-core', version: logbackVersion
   compile group: 'ch.qos.logback', name: 'logback-access', version: logbackVersion
 
+  //utilities libraires
+  compile group: 'com.google.guava', name: 'guava', version: '12.0'
+
   //testing dependencies
   testCompile "junit:junit:4.11"
+  testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: "2.0.5"
+
   testCompile "org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-jetty:${jerseyVersion}"
   testCompile "org.springframework:spring-test:${springVersion}"
   testCompile group: 'org.spockframework', name: 'spock-core', version: spockVersion
   testCompile group: 'org.spockframework', name: 'spock-spring', version: spockVersion
+  testCompile (group: 'com.jayway.restassured', name: 'rest-assured', version: '1.2.3') {
+    exclude group: 'org.codehaus.groovy'
+  }
+/*  testCompile (group: 'co.freeside', name: 'betamax', version: '1.1.2'){
+    exclude group: 'org.codehaus.groovy'
+  }*/
 
   integrationTestCompile sourceSets.main.output
   integrationTestCompile configurations.testCompile

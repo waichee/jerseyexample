@@ -1,8 +1,7 @@
-package org.wai.service
+package org.wai.jerseyexample.service
 
-import org.wai.domain.Order
-import spock.lang.Specification;
-
+import org.wai.jerseyexample.domain.Order
+import spock.lang.Specification
 
 class AdhocOrderServiceSpec extends Specification {
 
@@ -45,6 +44,22 @@ class AdhocOrderServiceSpec extends Specification {
     null            |  false
     "10".toLong()  |  true
   }
+
+
+  def "should modify order address"() {
+    given:
+    def order = orderService.getOrder(1L);
+    def initialAddress = order.getAddress()
+
+    when:
+    def result = orderService.modifyOrder(order)
+
+    then:
+    initialAddress == "Tiny village"
+    result.getAddress() == "Big village".reverse()
+
+  }
+
 
 
 }

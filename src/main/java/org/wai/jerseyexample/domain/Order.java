@@ -1,8 +1,14 @@
-package org.wai.domain;
+package org.wai.jerseyexample.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.Date;
+
+/**
+ * Bean class for representing an Order
+ * TODO : add database/persistence layer...
+ */
 public class Order {
 
   private Long orderId;
@@ -10,6 +16,8 @@ public class Order {
   private String name;
 
   private String address;
+
+  private Date purchaseDate;
 
   //Some property thats not required to be returned to the client
   @JsonIgnore
@@ -47,5 +55,14 @@ public class Order {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+
+  public Date getPurchaseDate() {
+    return purchaseDate;
+  }
+
+  public void setPurchaseDate(Date purchaseDate) {
+    this.purchaseDate = purchaseDate;
   }
 }

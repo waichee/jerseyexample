@@ -1,6 +1,6 @@
-package org.wai.service;
+package org.wai.jerseyexample.service;
 
-import org.wai.domain.Order;
+import org.wai.jerseyexample.domain.Order;
 
 @FunctionalInterface
 public interface OrderValidator {

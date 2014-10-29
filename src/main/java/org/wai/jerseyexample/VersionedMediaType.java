@@ -1,4 +1,4 @@
-package org.wai;
+package org.wai.jerseyexample;
 
 /**
  * Custom media type for specifying the version of the REST API

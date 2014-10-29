@@ -1,7 +1,6 @@
-package org.wai.service
+package org.wai.jerseyexample.service
 
-import spock.lang.Specification;
-
+import spock.lang.Specification
 
 class BatchOrderServiceSpec extends Specification {
 
@@ -22,7 +21,8 @@ class BatchOrderServiceSpec extends Specification {
     then:
     result.orderId == orderId
     result.address == BatchOrderService.BATCH_ADDRESS
-    result.name == "John Smith"
+    result.name == BatchOrderService.BATCH_NAME
+
   }
 
   def "should validate order when the details required is valid"() {
@@ -45,6 +45,32 @@ class BatchOrderServiceSpec extends Specification {
     null                              | false
     "bla"                             | false
     "Tiny village"                    | false
+  }
+
+  def "should modify order description"() {
+    when:
+    def order = orderService.getOrder(1L)
+    def originalDescription = order.description
+    def result = orderService.modifyOrder(order)
+
+    then:
+    result.orderId == order.orderId
+    result.name == order.name
+    result.address == order.address
+    result.description == "Default batch size is:100"
+    !originalDescription
+
+  }
+
+
+
+  def "should illegal argument exception when trying to modify null order"() {
+    when:
+    orderService.modifyOrder(null)
+
+    then:
+    IllegalArgumentException e = thrown()
+
   }
 
 
