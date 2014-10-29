@@ -1,10 +1,11 @@
-Jersey REST Server and Client (JSON)
+Jersey REST Server and Client
 ================================================
 Java web application that provide REST web services.
 An example app for trying out some of the JDK 8 and Spring 4 features.
 
 29/10/2014 : The Java 8 functional interfaces API do remind me of Google Guava library and Groovy closures.......  =)
 The streams API seem interesting
+
 And finally some thread-safe date time API within JDK!
 
 Frameworks & Libraries
@@ -15,7 +16,7 @@ Frameworks & Libraries
 * Jackson 2 : JSON processing
 * Jetty     : Servlet container
 
-Testing frameworks : jersey-test,spring-test, junit, spock
+Testing frameworks : jersey-test,rest-assured, spring-test, junit, spock
 
 Jersey client is generated from the WADL using wadl2java tool
 
